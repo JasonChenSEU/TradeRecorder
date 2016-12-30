@@ -36,4 +36,14 @@ public class Product extends Material{
         }
     }
 
+    public class ProductItem{
+        public String getProductName(){
+            return getStrName();
+        }
+
+        public Double getProductCurPrice(){
+            return getCurSale().price;
+        }
+    }
+
 }

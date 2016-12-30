@@ -10,6 +10,14 @@ public class CostRecord {
     double price;
     String recordTime;
 
+    public double getPrice() {
+        return price;
+    }
+
+    public String getRecordTime() {
+        return recordTime;
+    }
+
     public CostRecord(double price) {
         this.price = price;
         this.recordTime = new Date().toString();
