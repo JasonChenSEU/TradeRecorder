@@ -26,7 +26,7 @@ public class Product extends Material{
     }
 
 
-    private class Composite{
+    public class Composite{
         Product material;
         int nums;
 

@@ -4,12 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jason.traderecorder.R;
+import com.jason.traderecorder.model.Material;
 import com.jason.traderecorder.model.Product;
 import com.jason.traderecorder.model.RecyclerViewItemClickListener;
 
@@ -29,7 +31,17 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
         ProductItemAdapter adapter = new ProductItemAdapter();
-//        mRecyclerView.setAdapter();
+        List<Product.Composite> ls = new ArrayList<>();
+        ls.add(new Product.Composite(new Material("Test Material1")));
+        Product p = new Product("Test1", ls);
+        adapter.add(new Product("Test1", new ArrayList<Product.Composite>()));
+        adapter.setOnItemClickListener(new RecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Log.v("MainActivity","" +position);
+            }
+        });
+        mRecyclerView.setAdapter(adapter);
 
 
     }
