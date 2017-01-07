@@ -18,9 +18,11 @@ public class Material {
         this.strName = strName;
     }
 
-    public Material(String strName, CostRecord curSale) {
+    public Material(String strName, double curSale) {
+        //Make sure that current cost price is equal to current sale price for materials
         this.strName = strName;
-        this.curSale = curSale;
+        this.curSale = new CostRecord(curSale);
+        this.curCost = this.curSale;
     }
 
     public String getStrName() {

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jason.traderecorder.R;
+import com.jason.traderecorder.model.CostRecord;
 import com.jason.traderecorder.model.Material;
 import com.jason.traderecorder.model.Product;
 import com.jason.traderecorder.model.RecyclerViewItemClickListener;
@@ -31,10 +32,9 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
         ProductItemAdapter adapter = new ProductItemAdapter();
-        List<Product.Composite> ls = new ArrayList<>();
-        ls.add(new Product.Composite(new Material("Test Material1")));
-        Product p = new Product("Test1", ls);
-        adapter.add(new Product("Test1", new ArrayList<Product.Composite>()));
+        Product p = new Product("Test1");
+        p.addMaterial(new Material("Test2",10.0),6);
+        adapter.add(p);
         adapter.setOnItemClickListener(new RecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -123,7 +123,11 @@ public class MainActivity extends AppCompatActivity {
             ProductItemView productItemView = (ProductItemView) holder;
 
             productItemView.getTvName().setText(products.get(position).getStrName());
-            productItemView.getTvCurPrice().setText(String.valueOf(products.get(position).getCurSale().getPrice()));
+            CostRecord temp = products.get(position).getCurSale();
+            if(temp == null)
+                productItemView.getTvCurPrice().setText("0.0");
+            else
+                productItemView.getTvCurPrice().setText(String.valueOf(temp.getPrice()));
         }
 
 

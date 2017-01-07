@@ -1,5 +1,6 @@
 package com.jason.traderecorder.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,27 +11,36 @@ public class Product extends Material{
 
     List<Composite> composites;
 
-    public Product(String strName, List<Composite> composites) {
+    public Product(String strName) {
         super(strName);
-        this.composites = composites;
-        this.curCost = Calculate();
+        composites = new ArrayList<>();
     }
 
-    private CostRecord Calculate() {
+    public boolean addMaterial(Material material, int num) {
+        if(curCost == null)
+            curCost = new CostRecord(material.getCurCost().price * num);
+        else
+            curCost = new CostRecord(curCost.getPrice() + material.getCurCost().price * num);
+        return composites.add(new Composite(material, num));
+    }
+
+    public CostRecord Calculate() {
         double totalPrice = 0.0;
         for (Composite c :
                 composites) {
             totalPrice += c.material.getCurCost().price * c.nums;
         }
-        return new CostRecord(totalPrice);
+        //CurCost: only update
+        curCost = new CostRecord(totalPrice);
+        return curCost;
     }
 
 
     public class Composite{
-        Product material;
+        Material material;
         int nums;
 
-        public Composite(Product material, int nums) {
+        public Composite(Material material, int nums) {
             this.material = material;
             this.nums = nums;
         }
