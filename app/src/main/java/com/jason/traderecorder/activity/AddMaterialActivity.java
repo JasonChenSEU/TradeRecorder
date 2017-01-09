@@ -11,7 +11,7 @@ import com.jason.traderecorder.R;
 
 public class AddMaterialActivity extends AppCompatActivity {
 
-    EditText etMatName,etMatNums;
+    EditText etMatName,etMatNums,etMatCurSale;
     Button btnSubmit;
 
     @Override
@@ -21,13 +21,17 @@ public class AddMaterialActivity extends AppCompatActivity {
 
         etMatName = (EditText) findViewById(R.id.inputMaterialName);
         etMatNums = (EditText) findViewById(R.id.inputMaterialNums);
+        etMatCurSale = (EditText) findViewById(R.id.inputMaterialCurSale);
 
         btnSubmit = (Button) findViewById(R.id.btnMaterialSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent();
-                i.putExtra("RtMat", etMatName.getText() + " " + etMatNums.getText());
+                //TODO:Check invalidation
+                i.putExtra("RtMatName", etMatName.getText().toString());
+                i.putExtra("RtMatNum", Integer.valueOf(etMatNums.getText().toString()));
+                i.putExtra("RtMatCurSale", Double.valueOf(etMatCurSale.getText().toString()));
                 setResult(11, i);
                 finish();
             }

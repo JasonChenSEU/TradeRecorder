@@ -15,13 +15,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Name"
+        android:text="aaa"
         android:id="@+id/inputMaterialName" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="CurSalePrice"
+        android:hint="Nums"
+        android:text="2"
         android:id="@+id/inputMaterialNums" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="CurSalePrice"
+        android:text="22.2"
+        android:id="@+id/inputMaterialCurSale" />
 
     <Button
         android:layout_width="match_parent"
