@@ -20,8 +20,14 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="CurSalePrice"
+        android:hint="Numbers"
         android:id="@+id/inputProductNums" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="CurSalePrice"
+        android:id="@+id/inputProductCurSale" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,26 +56,6 @@
         android:id="@+id/list_component">
 
     </android.support.v7.widget.RecyclerView>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutComponent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Test1 num:1 curSale:1"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Test1 num:1 curSale:1"/>
-
-    </LinearLayout>
-
 
     <Button
         android:layout_width="match_parent"

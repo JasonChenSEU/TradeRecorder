@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,20 +17,22 @@ import com.jason.traderecorder.model.Material;
 import com.jason.traderecorder.model.Product;
 import com.jason.traderecorder.model.RecyclerViewItemClickListener;
 
+import static com.jason.traderecorder.R.id.inputProductNums;
+
 public class AddProductActivity extends AppCompatActivity {
 
     LinearLayout layoutComponent;
     Button btnAddProduct, btnAddMaterial,btnSubmit;
+    EditText etProName,etProNums,etProCurSale;
 
     RecyclerView listComponents;
     ProductItemAdapter adapter = new ProductItemAdapter();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
-
-        layoutComponent = (LinearLayout) findViewById(R.id.layoutComponent);
 
         listComponents = (RecyclerView) findViewById(R.id.list_component);
         listComponents.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
@@ -46,13 +49,14 @@ public class AddProductActivity extends AppCompatActivity {
 
         listComponents.setAdapter(adapter);
 
+        etProName = (EditText) findViewById(R.id.inputProductName);
+        etProNums = (EditText) findViewById(R.id.inputProductNums);
+        etProCurSale = (EditText) findViewById(R.id.inputProductCurSale);
+
         btnAddProduct = (Button) findViewById(R.id.btnAddProd);
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                TextView textView = new TextView(view.getContext());
-//                textView.setText("Product: Test2 num:2 curSale:12");
-//                layoutComponent.addView(textView);
                 Intent i = new Intent(AddProductActivity.this, AddProductActivity.class);
                 startActivityForResult(i,0);
 
@@ -63,14 +67,8 @@ public class AddProductActivity extends AppCompatActivity {
         btnAddMaterial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                TextView textView = new TextView(view.getContext());
-//                textView.setText("Material: Test3 num:3 curSale:3");
-//                layoutComponent.addView(textView);
                 Intent i = new Intent(AddProductActivity.this, AddMaterialActivity.class);
-//                startActivityForResult(i,1);
-                Product p = new Product("aaa");
-                p.addMaterial(new Material("aaa",20.0),3);
-                adapter.add(p);
+                startActivityForResult(i,1);
             }
         });
 
@@ -79,6 +77,9 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO:calculate and back
+                Product thisProduct = new Product(etProName.getText().toString(),
+                        Double.valueOf(etProCurSale.getText().toString()));
+
             }
         });
     }
@@ -86,7 +87,7 @@ public class AddProductActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 0) {
+        if(requestCode == 0 && resultCode == 12) {
             TextView textView = new TextView(this);
             textView.setText(data.getStringExtra("RtProd"));
             layoutComponent.addView(textView);
@@ -94,14 +95,17 @@ public class AddProductActivity extends AppCompatActivity {
 //            TextView textView = new TextView(this);
 //            textView.setText(data.getStringExtra("RtMatName"));
 
-            String strMatName = data.getStringExtra("RtMatName");
-            double dbMatCurSale = data.getDoubleExtra("RtMatCurSale",0.0);
-            int iMatNums = data.getIntExtra("RtMatNum",0);
+//            String strMatName = data.getStringExtra("RtMatName");
+//            double dbMatCurSale = data.getDoubleExtra("RtMatCurSale",0.0);
+//            int iMatNums = data.getIntExtra("RtMatNum",0);
 
-            Material material = new Material(strMatName,dbMatCurSale);
-            Product p = new Product(strMatName);
-            p.addMaterial(material,iMatNums);
-            adapter.add(p);
+            //用product包装Material，避免list的泛型问题
+//            Material material = new Material(strMatName,dbMatCurSale);
+//            Product p = new Product(strMatName,dbMatCurSale);
+//            p.addMaterial(material,iMatNums);
+            Material m = (Material) data.getSerializableExtra("RtMat");
+            int num = data.getIntExtra("RtMatNum",0);
+//            adapter.add(p);
 
 //            layoutComponent.addView(textView);
         }

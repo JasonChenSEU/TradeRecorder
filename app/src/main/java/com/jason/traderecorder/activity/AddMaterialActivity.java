@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.jason.traderecorder.R;
+import com.jason.traderecorder.model.CostRecord;
+import com.jason.traderecorder.model.GlobalData;
+import com.jason.traderecorder.model.Material;
+import com.jason.traderecorder.model.Product;
 
 public class AddMaterialActivity extends AppCompatActivity {
 
@@ -29,9 +33,26 @@ public class AddMaterialActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent();
                 //TODO:Check invalidation
-                i.putExtra("RtMatName", etMatName.getText().toString());
-                i.putExtra("RtMatNum", Integer.valueOf(etMatNums.getText().toString()));
-                i.putExtra("RtMatCurSale", Double.valueOf(etMatCurSale.getText().toString()));
+                String strMatName = etMatName.getText().toString();
+                double dbMatCurSale = Double.valueOf(etMatCurSale.getText().toString());
+                int iMatNums = Integer.valueOf(etMatNums.getText().toString());
+
+                if(GlobalData.materialMap.get(strMatName) == null) {
+                    Material material = new Material(strMatName, dbMatCurSale);
+//                    Product p = new Product(strMatName, dbMatCurSale);
+//                    p.addMaterial(material, iMatNums);
+                    i.putExtra("RtMat", material);
+                }else{
+                    boolean isUpdate = true;
+                    Material material = GlobalData.materialMap.get(strMatName);
+                    if(isUpdate){
+                        if(Math.abs(dbMatCurSale - material.getCurSale().getPrice() ) < 0.000001){
+                            material.updateRecord(new CostRecord(dbMatCurSale));
+                        }
+                    }
+                    i.putExtra("RtMat", material);
+                }
+                i.putExtra("RtMatNum", iMatNums);
                 setResult(11, i);
                 finish();
             }
