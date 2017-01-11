@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Jason on 2016/12/29.
  */
 
-public class CostRecord implements Serializable{
+public class CostRecord{
     double price;
     String recordTime;
 
@@ -22,5 +22,13 @@ public class CostRecord implements Serializable{
     public CostRecord(double price) {
         this.price = price;
         this.recordTime = new Date().toString();
+    }
+
+    @Override
+    public String toString() {
+        return "CostRecord{" +
+                "price=" + price +
+                ", recordTime='" + recordTime + '\'' +
+                '}';
     }
 }

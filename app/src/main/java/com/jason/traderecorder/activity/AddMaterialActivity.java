@@ -41,7 +41,7 @@ public class AddMaterialActivity extends AppCompatActivity {
                     Material material = new Material(strMatName, dbMatCurSale);
 //                    Product p = new Product(strMatName, dbMatCurSale);
 //                    p.addMaterial(material, iMatNums);
-                    i.putExtra("RtMat", material);
+                    i.putExtra("RtMatName", material.getStrName());
                 }else{
                     boolean isUpdate = true;
                     Material material = GlobalData.materialMap.get(strMatName);
@@ -50,7 +50,7 @@ public class AddMaterialActivity extends AppCompatActivity {
                             material.updateRecord(new CostRecord(dbMatCurSale));
                         }
                     }
-                    i.putExtra("RtMat", material);
+                    i.putExtra("RtMatName", material.getStrName());
                 }
                 i.putExtra("RtMatNum", iMatNums);
                 setResult(11, i);

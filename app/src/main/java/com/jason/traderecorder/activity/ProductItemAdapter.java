@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.jason.traderecorder.R;
 import com.jason.traderecorder.model.CostRecord;
+import com.jason.traderecorder.model.ListItem;
 import com.jason.traderecorder.model.Material;
 import com.jason.traderecorder.model.Product;
 import com.jason.traderecorder.model.RecyclerViewItemClickListener;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 class ProductItemAdapter extends RecyclerView.Adapter {
 
-    List<Product> products = new ArrayList<>();
+    List<ListItem> products = new ArrayList<>();
 
     private RecyclerViewItemClickListener mitemClickListener = null;
 
@@ -28,7 +29,7 @@ class ProductItemAdapter extends RecyclerView.Adapter {
         mitemClickListener = listener;
     }
 
-    public void add(Product p) {
+    public void add(ListItem p) {
         products.add(p);
         notifyDataSetChanged();
     }
@@ -39,16 +40,16 @@ class ProductItemAdapter extends RecyclerView.Adapter {
     }
 
     public void remove(String proName) {
-        Iterator<Product> it = products.iterator();
+        Iterator<ListItem> it = products.iterator();
         while (it.hasNext()) {
-            Product temp = it.next();
+            ListItem temp = it.next();
             if (temp.getStrName().equals(proName))
                 it.remove();
         }
         notifyDataSetChanged();
     }
 
-    public Product getItem(int position) {
+    public ListItem getItem(int position) {
         return products.get(position);
     }
 
@@ -63,11 +64,8 @@ class ProductItemAdapter extends RecyclerView.Adapter {
         ProductItemView productItemView = (ProductItemView) holder;
 
         productItemView.getTvName().setText(products.get(position).getStrName());
-        CostRecord temp = products.get(position).getCurSale();
-        if (temp == null)
-            productItemView.getTvCurPrice().setText("0.0");
-        else
-            productItemView.getTvCurPrice().setText(String.valueOf(temp.getPrice()));
+        productItemView.getTvCostPrice().setText(String.valueOf(products.get(position).getDbCurCost()));
+        productItemView.getTvSalePrice().setText(String.valueOf(products.get(position).getDbCurSale()));
     }
 
 

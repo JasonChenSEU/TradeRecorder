@@ -8,7 +8,7 @@ import java.util.TreeMap;
  * Created by Jason on 2016/12/29.
  */
 
-public class Material implements Serializable{
+public class Material{
     protected String strName;
     protected CostRecord curSale = null;
     protected Map<String, Double> preSales = new TreeMap<>();
@@ -32,10 +32,23 @@ public class Material implements Serializable{
         return preSales;
     }
 
+    public ListItem getItemForItem(){
+        return new ListItem(this.strName,this.curSale.getPrice(),this.curSale.getPrice());
+    }
+
     public void updateRecord(CostRecord curSale){
         if(curSale != null){
             preSales.put(curSale.recordTime, curSale.price);
         }
         this.curSale = curSale;
+    }
+
+    @Override
+    public String toString() {
+        return "Material{" +
+                "strName='" + strName + '\'' +
+                ", curSale=" + curSale +
+                ", preSales=" + preSales +
+                '}';
     }
 }

@@ -11,23 +11,17 @@ import java.util.TreeMap;
  * Created by Jason on 2016/12/29.
  */
 
-public class Product implements Serializable{
+public class Product{
 
-    Map<String, Integer> mapComposites = new HashMap<>();
-    List<Product> lsCompProducts = new ArrayList<>();
-    List<Material> lsCompMaterials = new ArrayList<>();
+    public Map<String, Integer> mapComposites = new HashMap<>();
+    public List<Product> lsCompProducts = new ArrayList<>();
+    public List<Material> lsCompMaterials = new ArrayList<>();
 
     protected String strName;
 
     protected CostRecord curCost = null;
     protected CostRecord curSale = null;
     protected Map<String, Double> preSales = new TreeMap<>();
-
-    public Product(String strName) {
-        this.strName = strName;
-        GlobalData.productMap.put(strName,this);
-//        composites = new ArrayList<>();
-    }
 
     public Product(String strName, double curSale) {
         this.strName = strName;
@@ -50,6 +44,12 @@ public class Product implements Serializable{
 
     public Map<String, Double> getPreSales() {
         return preSales;
+    }
+
+    public ListItem getItemForItem(){
+        double dbCost = this.curCost == null ? 0.0 : this.curCost.getPrice();
+
+        return new ListItem(this.strName,dbCost,this.curSale.getPrice());
     }
 
     /**
@@ -113,5 +113,18 @@ public class Product implements Serializable{
         //CurCost: only update
         curCost = new CostRecord(totalPrice);
         return curCost;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "mapComposites=" + mapComposites +
+                ", lsCompProducts=" + lsCompProducts +
+                ", lsCompMaterials=" + lsCompMaterials +
+                ", strName='" + strName + '\'' +
+                ", curCost=" + curCost +
+                ", curSale=" + curSale +
+                ", preSales=" + preSales +
+                '}';
     }
 }

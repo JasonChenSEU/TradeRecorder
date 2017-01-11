@@ -13,14 +13,16 @@ import com.jason.traderecorder.model.RecyclerViewItemClickListener;
 class ProductItemView extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     TextView tvName;
-    TextView tvCurPrice;
+    TextView tvCostPrice;
+    TextView tvSalePrice;
 
     private RecyclerViewItemClickListener mListener = null;
 
     public ProductItemView(View itemView, RecyclerViewItemClickListener listener) {
         super(itemView);
         tvName = (TextView) itemView.findViewById(R.id.item_product_name);
-        tvCurPrice = (TextView) itemView.findViewById(R.id.item_product_price);
+        tvCostPrice = (TextView) itemView.findViewById(R.id.item_product_cost_price);
+        tvSalePrice = (TextView) itemView.findViewById(R.id.item_product_sale_price);
         this.mListener = listener;
         itemView.setOnClickListener(this);
 
@@ -30,8 +32,12 @@ class ProductItemView extends RecyclerView.ViewHolder implements View.OnClickLis
         return tvName;
     }
 
-    public TextView getTvCurPrice() {
-        return tvCurPrice;
+    public TextView getTvCostPrice() {
+        return tvCostPrice;
+    }
+
+    public TextView getTvSalePrice() {
+        return tvSalePrice;
     }
 
     @Override
